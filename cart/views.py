@@ -40,3 +40,13 @@ def cart_update(request):
         messages.success(request,message=" Cart has been  Updated  ....") 
         response = JsonResponse({'qty': product_qty})
         return response
+
+
+def cart_delete(request):
+    if request.POST.get('action') == 'post':
+        product_id = int(request.POST.get('product_id'))
+        cart = Cart(request)
+        cart.delete(product=Product(id=product_id))  
+        response = JsonResponse({'product': product_id})
+        messages.success(request,message=" Product Deleted From Cart  ....")
+        return response
